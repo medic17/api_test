@@ -4,7 +4,7 @@
     {
         static APIKeys()
         {
-            GithubPersinalAccessToken = "4949901987ba7545f8c0e8347d076972e4e3dfc2";
+            GithubPersinalAccessToken = "dd88084cd7af79ffdad98beda2d5e580145b37e0";
         } 
     }
 }
