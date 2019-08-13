@@ -4,40 +4,45 @@ using api_test;
 using Octokit;
 
 
-/********* example code *****************************************
-    Finished: adding issue via hardcod    
-    TODO: add issue via user input in console
+/********************Progress************************************
+    Finished: add issue via user input in console    
+    TODO: connect logic to mvvm wpf
 *****************************************************************/
 
 class Program
-{ 
-       public async static Task Main()
-        {
+{
+    public async static Task Main()
+    {
         var client = new GitHubClient(new ProductHeaderValue("test-app"));
         var user = await client.User.Get("medic17");
         var tokenAuth = new Credentials(APIKeys.GithubPersinalAccessToken);
         client.Credentials = tokenAuth;
 
-        /*
+
         // user input
-        Console.WriteLine("What is your issue?", Environment.NewLine);
-        string userIssue = Console.ReadLine();
+        Console.WriteLine("Give a title for your issue: ");
+        string userIssueTitle = Console.ReadLine().Trim();
+
+        Console.WriteLine("Describe your issue:", Environment.NewLine);
+        string userIssue = Console.ReadLine().Trim();
 
         // input validation
-        while (string.IsNullOrEmpty(userIssue))
+        while (string.IsNullOrEmpty(userIssue) || string.IsNullOrEmpty(userIssueTitle))
         {
-            Console.WriteLine("empty response");
-            userIssue = Console.ReadLine();
+            Console.WriteLine("ERROR: Both fields must contain text");
+            Console.ReadLine();
+            break;
+
         }
 
-        Console.WriteLine($"your issue text is: {userIssue}");
-        Console.ReadLine();
-        */
-
-        string title = "A test issue";
-        string description = "body text";
-
-        var newIssue = new NewIssue(title) { Body = description };
+        var newIssue = new NewIssue(userIssueTitle) { Body = userIssue };
         var issue = await client.Issue.Create(200635224, newIssue);
-        }
+
+        var issueId = issue.Id;
+
+        Console.WriteLine($"SUCCESS: your issue id is {issueId} ");
+        Console.ReadLine();
+        
+    
+    }
 }
